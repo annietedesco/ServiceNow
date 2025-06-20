@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snyk & ServiceNow AppVR Integration Deployment Workflow</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Snyk-inspired dark theme */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0D0E2B; /* Dark blue/purple from the Snyk screenshot */
+            color: #E0E0E0; /* Light gray for main text */
+        }
+        .header-bg {
+            background-color: #1A1B3A; /* Slightly lighter dark blue for the header */
+            border-bottom: 2px solid #4A90E2; /* Accent line */
+        }
+        .section-title {
+            color: #FFFFFF; /* White for section titles */
+        }
+        .workflow-card {
+            background-color: #1A1B3A; /* Dark background for cards */
+            border-left: 5px solid #4A90E2; /* Snyk blue accent */
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Slightly darker shadow */
+            transition: transform 0.2s ease-in-out;
+            color: #E0E0E0; /* Light text within cards */
+            min-height: 180px; /* Consistent height for workflow steps */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .workflow-card:hover {
+            transform: translateY(-5px);
+        }
+        .step-number {
+            background-color: #4A90E2; /* Snyk blue for step numbers */
+            color: #FFFFFF;
+            font-weight: 700;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .workflow-item {
+            display: flex;
+            align-items: flex-start; /* Align number to the top of text */
+            gap: 1rem; /* Space between number and card */
+        }
+        .arrow-down {
+            color: #4A90E2; /* Snyk blue for arrows */
+            font-size: 2.5rem; /* Larger arrow */
+            text-align: center;
+            line-height: 1; /* Remove extra line height */
+            margin: 1rem 0; /* Vertical spacing for arrows */
+        }
+        .text-snyk-blue {
+            color: #4A90E2; /* Vibrant Snyk blue */
+            text-decoration: none; /* Remove underline by default */
+        }
+        .text-snyk-dark {
+            color: #FFFFFF; /* White for card headings */
+        }
+        .link-text {
+            color: #4A90E2; /* Snyk blue for links */
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+    <div class="max-w-4xl mx-auto">
+        <!-- Header Section -->
+        <header class="header-bg text-white rounded-lg p-6 mb-8 shadow-lg">
+            <h1 class="text-3xl sm:text-4xl font-bold mb-2 text-center">Snyk & ServiceNow AppVR Integration Deployment Workflow</h1>
+            <p class="text-md sm:text-lg text-center opacity-90">
+                A step-by-step guide to configuring your integration for streamlined vulnerability remediation.
+            </p>
+        </header>
+
+        <!-- Workflow Steps -->
+        <div class="flex flex-col items-center">
+
+            <!-- Step 1: ServiceNow Prerequisites & Plugin Install -->
+            <div class="workflow-item w-full mb-4">
+                <div class="step-number">1</div>
+                <div class="workflow-card p-5 flex-grow">
+                    <h3 class="text-xl font-semibold mb-2 text-snyk-dark">1. ServiceNow Prerequisites & Plugin Install</h3>
+                    <p class="text-sm">
+                        You need an active ServiceNow instance and a Snyk Enterprise license. As a System Administrator, activate the "Vulnerability Response" plugin (min version 24.1.5) in ServiceNow. This is essential for vulnerability management features.
+                    </p>
+                    <ul class="text-xs list-disc pl-4 mt-2">
+                        <li>Required role: System Administrator (`admin`)</li>
+                        <li><a href="https://docs.servicenow.com/bundle/xanadu-platform-administration/page/administer/plugins/task/t-activate-a-plugin.html" target="_blank" class="link-text">Activate ServiceNow Plugins Guide</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="arrow-down">&#8595;</div> <!-- Down Arrow -->
+
+            <!-- Step 2: Install Snyk AppVR from ServiceNow Store -->
+            <div class="workflow-item w-full mb-4">
+                <div class="step-number">2</div>
+                <div class="workflow-card p-5 flex-grow">
+                    <h3 class="text-xl font-semibold mb-2 text-snyk-dark">2. Install Snyk AppVR Application</h3>
+                    <p class="text-sm">
+                        Go to the <a href="https://store.servicenow.com" target="_blank" class="link-text">ServiceNow Store</a>. Search for "Snyk Security for Application Vulnerability Response" and install the application. This brings the core integration capabilities to your ServiceNow instance.
+                    </p>
+                    <ul class="text-xs list-disc pl-4 mt-2">
+                        <li>Required role: System Administrator (`admin`)</li>
+                        <li><a href="https://store.servicenow.com/store/app/bc2ae7e21b246a50a85b16db234bcb88" target="_blank" class="link-text">Snyk Security for AppVR on ServiceNow Store</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="arrow-down">&#8595;</div> <!-- Down Arrow -->
+
+            <!-- Step 3: Configure Global Settings & Base URL -->
+            <div class="workflow-item w-full mb-4">
+                <div class="step-number">3</div>
+                <div class="workflow-card p-5 flex-grow">
+                    <h3 class="text-xl font-semibold mb-2 text-snyk-dark">3. Configure Global Settings & Base URL</h3>
+                    <p class="text-sm">
+                        In ServiceNow, navigate to `Snyk Security for AppVR > Configuration > Global Setting`. Set the correct Snyk Base URL (`https://api.us.snyk.io` for AWS or `https://api.snyk.io` for GCP) based on your Snyk platform's region. This ensures ServiceNow connects to the right Snyk API endpoint.
+                    </p>
+                    <ul class="text-xs list-disc pl-4 mt-2">
+                        <li>Contact: <a href="mailto:servicenow@snyk.io" class="link-text">servicenow@snyk.io</a> to register your ServiceNow instance's redirect URL with Snyk.</li>
+                        <li>Required role: `x_snyk2_snyk_vr_in.configure_integration`</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="arrow-down">&#8595;</div> <!-- Down Arrow -->
+
+            <!-- Step 4: Generate OAuth Token -->
+            <div class="workflow-item w-full mb-4">
+                <div class="step-number">4</div>
+                <div class="workflow-card p-5 flex-grow">
+                    <h3 class="text-xl font-semibold mb-2 text-snyk-dark">4. Generate OAuth Token & Grant Access</h3>
+                    <p class="text-sm">
+                        Go to `Snyk Security for AppVR > Configuration > REST/OAuth Token`. Click "Get OAuth Token" to securely link Snyk with ServiceNow. You'll be redirected to Snyk to authorize access, choosing to grant permissions for "All Organizations" or "Select Organizations".
+                    </p>
+                    <ul class="text-xs list-disc pl-4 mt-2">
+                        <li>Required roles: `x_snyk2_snyk_vr_in.configure_integration`, `web_service_admin`</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="arrow-down">&#8595;</div> <!-- Down Arrow -->
+
+            <!-- Step 5: Define Data Mapping & Filters -->
+            <div class="workflow-item w-full mb-4">
+                <div class="step-number">5</div>
+                <div class="workflow-card p-5 flex-grow">
+                    <h3 class="text-xl font-semibold mb-2 text-snyk-dark">5. Define Data Mapping & Filters</h3>
+                    <p class="text-sm">
+                        In `Global Setting`, define "Project Tags" (e.g., `CMDBID`) to map Snyk projects to your ServiceNow CMDB. In `Vulnerability Filtering`, set rules (e.g., by severity, project type, or ignored status) to control which Snyk issues are imported as Application Vulnerable Items (AVITs) into ServiceNow.
+                    </p>
+                    <ul class="text-xs list-disc pl-4 mt-2">
+                        <li>Supports filtering by Organization, Projects, Severity, Branch, Tags, etc.</li>
+                        <li>Required role: `x_snyk2_snyk_vr_in.configure_integration`</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="arrow-down">&#8595;</div> <!-- Down Arrow -->
+
+            <!-- Step 6: Activate & Schedule Integrations -->
+            <div class="workflow-item w-full mb-4">
+                <div class="step-number">6</div>
+                <div class="workflow-card p-5 flex-grow">
+                    <h3 class="text-xl font-semibold mb-2 text-snyk-dark">6. Activate & Schedule Integrations</h3>
+                    <p class="text-sm">
+                        Go to `Snyk Security for AppVR > Configuration > Integrations`. Activate "Snyk Projects and Organizations Import" to bring Snyk projects into ServiceNow. Then, activate your desired vulnerability import integrations (e.g., "Snyk SAST Vulnerabilities Import", "Snyk SCA & IaC Vulnerabilities Import") and set their schedules for regular data synchronization.
+                    </p>
+                    <ul class="text-xs list-disc pl-4 mt-2">
+                        <li>Projects are imported as Application Release and Scanned Application.</li>
+                        <li>Vulnerabilities are imported as AVITs.</li>
+                        <li>Required role: `x_snyk2_snyk_vr_in.configure_integration`</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="arrow-down">&#8595;</div> <!-- Down Arrow -->
+
+            <!-- Step 7: Configure Assignment Rules & Exceptions (Optional) -->
+            <div class="workflow-item w-full mb-4">
+                <div class="step-number">7</div>
+                <div class="workflow-card p-5 flex-grow">
+                    <h3 class="text-xl font-semibold mb-2 text-snyk-dark">7. Configure Assignment Rules & Exceptions (Optional)</h3>
+                    <p class="text-sm">
+                        Set up assignment rules (`Application Vulnerability Response > Administration > Assignment Rules`) to automatically assign AVITs to users or groups. In `Vulnerability Filtering`, enable "Manage exceptions in ServiceNow" and "Manage false positives" to allow bi-directional synchronization of ignore and false positive statuses between Snyk and ServiceNow.
+                    </p>
+                    <ul class="text-xs list-disc pl-4 mt-2">
+                        <li><a href="https://docs.servicenow.com/bundle/utah-security-operations/page/product/security-operations-common/concept/security-operations-assignment-rules.html" target="_blank" class="link-text">ServiceNow Assignment Rules Guide</a></li>
+                        <li><a href="https://docs.servicenow.com/bundle/washingtondc-security-management/page/product/vulnerability-response/task/vr-ws-approve-requests.html" target="_blank" class="link-text">Manage Exceptions & False Positives in ServiceNow</a></li>
+                        <li>Required role: `x_snyk2_snyk_vr_in.configure_integration`</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="arrow-down">&#8595;</div> <!-- Down Arrow -->
+
+            <!-- Step 8: Test, Monitor & Troubleshoot -->
+            <div class="workflow-item w-full">
+                <div class="step-number">8</div>
+                <div class="workflow-card p-5 flex-grow">
+                    <h3 class="text-xl font-semibold mb-2 text-snyk-dark">8. Test, Monitor & Troubleshoot</h3>
+                    <p class="text-sm">
+                        After configuring, run the integrations and verify that Snyk data (projects, vulnerabilities) is correctly flowing into ServiceNow. Use `Snyk Security for AppVR > Snyk Dashboards` to monitor performance. If issues arise, consult the Snyk Integration with ServiceNow User Guide's Troubleshooting section or contact <a href="https://support.snyk.io/" target="_blank" class="link-text">Snyk Support</a>.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer Section -->
+        <footer class="text-center mt-10 text-sm" style="color: #A0A0A0;">
+            <p>&copy; 2024 Snyk & ServiceNow. All rights reserved.</p>
+            <p>Empowering secure development with seamless vulnerability management.</p>
+        </footer>
+    </div>
+</body>
+</html>
